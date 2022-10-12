@@ -1,6 +1,8 @@
 # banco-dados-2022
 
-## Bem vindos ao desafio de banco de dados.
+## Resultados das buscas solicitadas
+
+<br>
 
 ### Eu sou o cliente 1 e gostaria de saber todos os meus gastos do mês de agosto
 
@@ -13,8 +15,8 @@ select * from movimentacao m inner join categorias c on c.id_categoria = m.id_ca
 ```
 
 ![a](https://user-images.githubusercontent.com/54187661/195333597-636de9ec-5063-4f22-bf05-8c60dbec436c.png)
-<br>
 
+<br><br>
 
 ### Como cliente 1 quero ver todas as minhas movimentações no Bradesco (cod 237) e as descrições da categoria dessas movimentações.
 
@@ -24,7 +26,7 @@ select valor, descricao from movimentacao where id_conta in (select id_conta fro
 ```
 ![b](https://user-images.githubusercontent.com/54187661/195334019-5d3fd749-bb46-4a99-99b6-4a9436dce5a4.png)<br>
 comentário: Ainda haviam movimentações para baixo do print, da pra ver que o banco principal desse cara é o Bradesco rsrs.
-
+<br><br>
 ### Como cliente 1 quero buscar todas as minhas categorias que estejam relacionadas com o meu trabalho, tipo 'viajem atrabalho', 'presente para colega de trabalho', etc.
 ```
 select mo.id_conta, ca.descricao from categorias ca inner join movimentacao mo 
@@ -35,12 +37,18 @@ select mo.id_conta, ca.descricao from categorias ca inner join movimentacao mo
 ```
 ![c](https://user-images.githubusercontent.com/54187661/195334724-78cf2ca8-0b40-4208-81ef-fe8669ad3666.png)
 
+<br><br>
 
+## Como cliente 1 quero ver todas as minhas movimentações no primeiro semestre desse ano
 
-Buscar todas as minhas categorias que tenham "trabalho" em sua descrição. Quero buscar como "Trabalho" ou "trabalho"
-e traga categorias como: "Gasolina para trabalho", "alimentação no Trabalho", "Futebol do trabalho".
+```
+select id_movimentacao, c.id_cliente as cliente, valor, date_format(data_movimentacao, "%d/%m/%Y"), 
+	if(month(data_movimentacao) < 7,1,2) semestre 
+	from movimentacao m inner join conta_corrente c on m.id_conta = c.id_conta 
+	where if(month(data_movimentacao) < 7,1,2) = 1 and c.id_cliente = 1;
+```
 
-
+![d](https://user-images.githubusercontent.com/54187661/195343947-a2b8859a-cd43-4e53-b89d-e4dc82a6acdc.png)
 
 
 
